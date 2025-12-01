@@ -16,7 +16,20 @@ def solve_A(input_lines: list):
   return counter
 
 def solve_B(input_lines: list):
-  pass
+  state = 50
+  counter = 0
+  for line in input_lines:
+    action = (1 if line[0] == "R" else -1) * int(line[1:])
+    temp_state = state + action
+    if temp_state > 0:
+      counter += temp_state // 100
+    else:
+      if state == 0:
+        # don't double-count 0 by accident
+        counter -= 1
+      counter += -((temp_state - 1) // 100)
+    state = temp_state % 100
+  return counter
 
 if __name__ == '__main__':
   argparser = argparse.ArgumentParser()
