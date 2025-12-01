@@ -1,0 +1,6 @@
+.DS_Store
+__pycache__/
+
+# Input files excluded per author request
+input*.txt
+output*.txt
