@@ -1,5 +1,6 @@
 .DS_Store
 __pycache__/
+.venv/
 
 # Input files excluded per author request
 input*.txt
