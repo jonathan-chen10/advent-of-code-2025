@@ -14,7 +14,7 @@ do
   if [ -e "$SOLN_FILE" ]; then
     wc -l < $SOLN_FILE | tr -d '[:space:]' | xargs printf "Day $i     %3s\n"
   else
-    break
+    echo "Day $i"
   fi
 done
 echo "============="
