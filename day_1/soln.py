@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
   if args.mode == "test":
     with open(f"{this_dir}/input-{args.stage.lower()}-test.txt", "r") as file:
-      input_lines = file.readlines()
+      input_lines = [line.rstrip() for line in file.readlines()] 
   else:
     input_lines = [line.rstrip() for line in sys.stdin]
   
