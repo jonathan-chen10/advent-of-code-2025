@@ -1,12 +1,12 @@
 import argparse
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 import os
 import sys
 
 sys.path.append('..')
 this_dir = os.path.dirname(__file__)
 
-def solve_A(input_lines: list[str]) -> int:
+def solve_A(input_lines: Sequence[Sequence] | Sequence[str]) -> int:
   counter = 0
   for row in range(len(input_lines)):
     for col in range(len(input_lines[0])):
@@ -15,7 +15,7 @@ def solve_A(input_lines: list[str]) -> int:
         counter += 1
   return counter 
 
-def count_neighboring(input_lines: list[str], 
+def count_neighboring(input_lines: Sequence[Sequence] | Sequence[str], 
                       row: int, col: int, pred: Callable[[str], bool]) -> int:
   assert 0 <= row < len(input_lines)
   assert 0 <= col < len(input_lines[0])
@@ -39,7 +39,20 @@ def count_neighboring(input_lines: list[str],
   return counter
 
 def solve_B(input_lines: list[str]) -> int:
-  raise NotImplementedError()
+  arr = [list(row) for row in input_lines]
+  counter = 0
+  needs_checking = True 
+  while needs_checking:
+    needs_checking = False
+    for row in range(len(arr)):
+      for col in range(len(arr[0])):
+        if (arr[row][col] == '@' and 
+            count_neighboring(arr, row, col, lambda c : c == '@') < 4):
+          needs_checking = True
+          counter += 1
+          arr[row][col] = '.'
+
+  return counter
 
 if __name__ == '__main__':
   argparser = argparse.ArgumentParser()

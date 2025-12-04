@@ -9,4 +9,4 @@ My only goal is to finish the Advent of Code, i.e. do one problem every day. Wit
 | [Day 1](./day_1/soln.py) | Addition mod 100                             | Per-step Integer division                |
 | [Day 2](./day_2/soln.py) | Find first and last repeating nums per range | Repeat part 1 for all sizes, remove dups |
 | [Day 3](./day_3/soln.py) | Greedily pick each digit                     | Same as part 1                           |
-| [Day 4](./day_4/soln.py) | Iterate through all locations/neighbors      | Same as part 1                           |
+| [Day 4](./day_4/soln.py) | Iterate through all locations/neighbors      | Iteratively remove until fixed point     |
