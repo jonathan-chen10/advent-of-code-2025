@@ -5,11 +5,11 @@ import sys
 sys.path.append('..')
 this_dir = os.path.dirname(__file__)
 
-def solve_A(input_lines: list):
-  pass
+def solve_A(input_lines: list[str]) -> int:
+  raise NotImplementedError()
 
-def solve_B(input_lines: list):
-  pass
+def solve_B(input_lines: list[str]) -> int:
+  raise NotImplementedError()
 
 if __name__ == '__main__':
   argparser = argparse.ArgumentParser()
