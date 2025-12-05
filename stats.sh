@@ -20,7 +20,7 @@ do
     _res=$(python $SOLN_FILE run B < "$SCRIPT_DIR/day_${i}/input-b.txt")
     end_b=$(gdate +%s.%N)
     wc -l < $SOLN_FILE | tr -d '[:space:]' \
-    | xargs -I {} printf "Day %-2s    %3s  %8.3f  %8.3f\n" $i {} "\
+    | xargs -I {} printf "Day %-2s    %3s  %8.f  %8.f\n" $i {} "\
     "$(echo "$end_a - $start_a" | bc) $(echo "$end_b - $start_b" | bc)
   else
     echo "Day $i"
