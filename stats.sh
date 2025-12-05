@@ -13,6 +13,7 @@ for i in {1..12}
 do
   SOLN_FILE="$SCRIPT_DIR/day_${i}/soln.py"
   if [ -e "$SOLN_FILE" ]; then
+    # probably replace with Python direct function call later
     start_a=$(gdate +%s.%N)
     _res=$(python $SOLN_FILE run A < "$SCRIPT_DIR/day_${i}/input-a.txt")
     end_a=$(gdate +%s.%N)
