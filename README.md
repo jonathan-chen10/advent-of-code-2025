@@ -11,3 +11,4 @@ My only goal is to finish the Advent of Code, i.e. do one problem every day. Wit
 | [Day 3](./day_3/soln.py) | Greedily pick each digit                     | Same as part 1                           |
 | [Day 4](./day_4/soln.py) | Iterate through all locations/neighbors      | Iteratively remove until fixed point     |
 | [Day 5](./day_5/soln.py) | Linear scan of ranges                        | Merge intervals and add widths           |
+| [Day 6](./day_6/soln.py) | Parse rows and operate column-wise           |                                          |
