@@ -25,7 +25,33 @@ def solve_A(input_lines: list[str]) -> int:
 
 
 def solve_B(input_lines: list[str]) -> int:
-  raise NotImplementedError()
+  assert len(input_lines) > 0
+  for line in input_lines:
+    assert len(line) == len(input_lines[0])
+
+  running_sum = 0
+  buffer = []
+  for col in range(len(input_lines[0])-1, -1, -1):
+    # read number
+    this_num_s = ''
+    for row in range(len(input_lines)):
+      if input_lines[row][col].isdigit():
+        this_num_s += input_lines[row][col]
+    if len(this_num_s) > 0:
+      buffer.append(int(this_num_s))
+
+    # perform operation
+    if input_lines[len(input_lines) - 1][col] == '+':
+      running_sum += sum(buffer)
+      buffer = []
+    elif input_lines[len(input_lines) - 1][col] == '*':
+      prod = 1
+      for n in buffer:
+        prod *= n
+      running_sum += prod
+      buffer = []
+      
+  return running_sum
 
 if __name__ == '__main__':
   main_day(6)
