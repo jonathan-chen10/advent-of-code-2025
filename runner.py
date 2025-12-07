@@ -22,7 +22,7 @@ def test_single(day: int, part: str):
   assert 1 <= day <= 12
   assert part in ['A', 'B']
   with open(f"{this_dir}/day_{day}/input-{part}-test.txt", "r") as in_file:
-    input_lines = [line.rstrip() for line in in_file.readlines()]
+    input_lines = [line[:-1] for line in in_file.readlines()]
   result = solve_fxn(day, part)(input_lines)
 
   with open(f"{this_dir}/day_{day}/output-{part}-test.txt", "r") as out_file:
@@ -47,18 +47,18 @@ def main():
   args = argparser.parse_args()
   
   if args.mode == "run":
-    run_single(int(args.day), args.stage, [line.rstrip() for line in sys.stdin])
+    run_single(int(args.day), args.stage, [line[:-1] for line in sys.stdin])
   if args.mode == "run_default":
     with open(f"{this_dir}/day_{args.day}/input-{args.stage.lower()}.txt", "r") as in_file:
-      input_lines = [line.rstrip() for line in in_file.readlines()]
+      input_lines = [line[:-1] for line in in_file.readlines()]
     run_single(int(args.day), args.stage, input_lines)
   if args.mode == "test":
     test_single(int(args.day), args.stage)
   if args.mode == "time":
-    time_single(int(args.day), args.stage, [line.rstrip() for line in sys.stdin])
+    time_single(int(args.day), args.stage, [line[:-1] for line in sys.stdin])
   if args.mode == "time_default":
     with open(f"{this_dir}/day_{args.day}/input-{args.stage.lower()}.txt", "r") as in_file:
-      input_lines = [line.rstrip() for line in in_file.readlines()]
+      input_lines = [line[:-1] for line in in_file.readlines()]
     time_single(int(args.day), args.stage, input_lines)
 
 def main_day(day: int):
@@ -68,18 +68,18 @@ def main_day(day: int):
   args = argparser.parse_args()
   
   if args.mode == "run":
-    run_single(day, args.stage, [line.rstrip() for line in sys.stdin])
+    run_single(day, args.stage, [line[:-1] for line in sys.stdin])
   if args.mode == "run_default":
     with open(f"{this_dir}/day_{day}/input-{args.stage.lower()}.txt", "r") as in_file:
-      input_lines = [line.rstrip() for line in in_file.readlines()]
+      input_lines = [line[:-1] for line in in_file.readlines()]
     run_single(day, args.stage, input_lines)
   if args.mode == "test":
     test_single(day, args.stage)
   if args.mode == "time":
-    time_single(day, args.stage, [line.rstrip() for line in sys.stdin])
+    time_single(day, args.stage, [line[:-1] for line in sys.stdin])
   if args.mode == "time_default":
     with open(f"{this_dir}/day_{day}/input-{args.stage.lower()}.txt", "r") as in_file:
-      input_lines = [line.rstrip() for line in in_file.readlines()]
+      input_lines = [line[:-1] for line in in_file.readlines()]
     time_single(day, args.stage, input_lines)
 
 if __name__ == '__main__':
