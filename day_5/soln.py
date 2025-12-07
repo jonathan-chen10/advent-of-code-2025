@@ -15,6 +15,9 @@ class RangeSet():
     else:
       self.ranges: list[tuple[int, int]] = list(data)
 
+  def merge_ranges(self) -> None:
+    self.ranges = self.ranges_disjoint()
+
   def add_range(self, start: int, end: int) -> None:
     self.ranges.append((start, end))
 
@@ -52,6 +55,7 @@ def solve_A(input_lines: list[str]) -> int:
       ranges.add_range(start, end)
     elif len(line.strip()) > 0:
       ingredients.append(int(line))
+  ranges.merge_ranges()
   
   return sum(1 for id in ingredients if ranges.has_num(id))
 
