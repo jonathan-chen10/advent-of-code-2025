@@ -69,10 +69,18 @@ def main_day(day: int):
   
   if args.mode == "run":
     run_single(day, args.stage, [line.rstrip() for line in sys.stdin])
+  if args.mode == "run_default":
+    with open(f"{this_dir}/day_{day}/input-{args.stage.lower()}.txt", "r") as in_file:
+      input_lines = [line.rstrip() for line in in_file.readlines()]
+    run_single(day, args.stage, input_lines)
   if args.mode == "test":
     test_single(day, args.stage)
   if args.mode == "time":
     time_single(day, args.stage, [line.rstrip() for line in sys.stdin])
+  if args.mode == "time_default":
+    with open(f"{this_dir}/day_{day}/input-{args.stage.lower()}.txt", "r") as in_file:
+      input_lines = [line.rstrip() for line in in_file.readlines()]
+    time_single(day, args.stage, input_lines)
 
 if __name__ == '__main__':
   main()
