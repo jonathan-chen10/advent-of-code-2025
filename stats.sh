@@ -14,8 +14,8 @@ do
   SOLN_FILE="$SCRIPT_DIR/day_${i}/soln.py"
   RUNNER_FILE="$SCRIPT_DIR/runner.py"
   if [ -e "$SOLN_FILE" ]; then
-    time_a=$(python $RUNNER_FILE time_default $i A)
-    time_b=$(python $RUNNER_FILE time_default $i B)
+    time_a=$(python $RUNNER_FILE time-default $i A)
+    time_b=$(python $RUNNER_FILE time-default $i B)
     wc -l < $SOLN_FILE | tr -d '[:space:]' \
     | xargs -I {} printf "Day %-2s    %3s  %8.3f  %8.3f\n" $i {} $time_a $time_b
   else
