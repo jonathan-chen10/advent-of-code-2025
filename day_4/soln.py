@@ -1,6 +1,8 @@
-from collections.abc import Callable, Sequence
+from collections.abc import Sequence
 import os
 import sys
+
+from utils.grid import CellularAutomaton, count_neighboring
 
 parent_dir = os.path.abspath(
   os.path.join(os.path.dirname(__file__), '..')
@@ -17,42 +19,20 @@ def solve_A(input_lines: Sequence[Sequence] | Sequence[str]) -> int:
         counter += 1
   return counter 
 
-def count_neighboring(input_lines: Sequence[Sequence] | Sequence[str], 
-                      row: int, col: int, pred: Callable[[str], bool]) -> int:
-  assert 0 <= row < len(input_lines)
-  assert 0 <= col < len(input_lines[0])
-  directions_y = [0]
-  if row != 0:
-    directions_y.append(-1)
-  if row != len(input_lines) - 1:
-    directions_y.append(1)
-  directions_x = [0]
-  if col != 0:
-    directions_x.append(-1)
-  if col != len(input_lines[0]) - 1:
-    directions_x.append(1)
-
-  counter = 0
-  for dy in directions_y:
-    for dx in directions_x:
-      if (not (dx == 0 and dy == 0) and pred(input_lines[row + dy][col + dx])):
-        counter += 1
-
-  return counter
-
 def solve_B(input_lines: list[str]) -> int:
-  arr = [list(row) for row in input_lines]
+  def transition_rule(grid: Sequence[Sequence[str]], row: int, col: int) -> str:
+    if (grid[row][col] == '@' and 
+        count_neighboring(grid, row, col, lambda c : c == '@') < 4):
+      return '.'
+    return grid[row][col]
+  ca = CellularAutomaton(input_lines, transition_rule)
+  ca.run()
+
   counter = 0
-  needs_checking = True 
-  while needs_checking:
-    needs_checking = False
-    for row in range(len(arr)):
-      for col in range(len(arr[0])):
-        if (arr[row][col] == '@' and 
-            count_neighboring(arr, row, col, lambda c : c == '@') < 4):
-          needs_checking = True
-          counter += 1
-          arr[row][col] = '.'
+  for i in range(len(input_lines)):
+    for j in range(len(input_lines[0])):
+      if input_lines[i][j] != ca.current_state[i][j]:
+        counter += 1
 
   return counter
 
