@@ -22,8 +22,6 @@ def solve_A(input_lines: list[str]) -> int:
       running_sum += prod
   return running_sum
 
-
-
 def solve_B(input_lines: list[str]) -> int:
   assert len(input_lines) > 0
   for line in input_lines:
