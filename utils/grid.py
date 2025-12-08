@@ -49,23 +49,21 @@ class UnionFind():
   
   def kruskal(self, 
               tries_limit: int | None = None, 
-              unions_limit: int | None = None) -> list[tuple[int, int]]:
-    pairs: list[tuple[tuple[int, tuple[int, ...]], 
-                      tuple[int, tuple[int, ...]]]] = []
+              unions_limit: int | None = None) -> list[tuple[int, int, float]]:
     
+    edges: list[tuple[int, int, float]] = []
     for i1, b1 in enumerate(self.coords):
       for i2 in range(i1+1, len(self.coords)):
         b2 = self.coords[i2]
-        pairs.append(((i1, b1), (i2, b2)))
-    edges: list[tuple[int, int]] = [(x[0][0], x[1][0]) for x in sorted(
-      pairs, key=lambda enums: l2(enums[0][1], enums[1][1])
-    )]
+        edges.append((i1, i2, l2(b1, b2)))
+    edges.sort(key=lambda e: e[2])
+
     if tries_limit is not None:
       edges = edges[:tries_limit]
 
     edges_added = 0
     for i, edge in enumerate(edges):
-      success_union = self.union(*edge)
+      success_union = self.union(edge[0], edge[1])
       if success_union:
         edges_added += 1 
         if unions_limit is not None and edges_added == unions_limit:
