@@ -1,5 +1,6 @@
 from collections.abc import Callable, Sequence
 import copy
+import math
 
 class CellularAutomaton():
   def __init__(self, 
@@ -27,6 +28,60 @@ class CellularAutomaton():
     while self.step():
       pass
 
+class UnionFind():
+  def __init__(self, coords: list[tuple[int, ...]]):
+    self.coords = coords.copy()
+    self.parent_idx = list(range(len(coords)))
+
+  def find(self, idx: int) -> int:
+    cur_idx = idx
+    while (self.parent_idx[cur_idx] != cur_idx):
+      cur_idx = self.parent_idx[cur_idx]
+    return cur_idx 
+
+  def union(self, i1: int, i2: int) -> bool:
+    p1 = self.find(i1)
+    p2 = self.find(i2)
+    if p1 == p2:
+      return False 
+    self.parent_idx[p1] = p2 
+    return True 
+  
+  def kruskal(self, 
+              tries_limit: int | None = None, 
+              unions_limit: int | None = None) -> list[tuple[int, int]]:
+    pairs: list[tuple[tuple[int, tuple[int, ...]], 
+                      tuple[int, tuple[int, ...]]]] = []
+    
+    for i1, b1 in enumerate(self.coords):
+      for i2 in range(i1+1, len(self.coords)):
+        b2 = self.coords[i2]
+        pairs.append(((i1, b1), (i2, b2)))
+    edges: list[tuple[int, int]] = [(x[0][0], x[1][0]) for x in sorted(
+      pairs, key=lambda enums: l2(enums[0][1], enums[1][1])
+    )]
+    if tries_limit is not None:
+      edges = edges[:tries_limit]
+
+    edges_added = 0
+    for i, edge in enumerate(edges):
+      success_union = self.union(*edge)
+      if success_union:
+        edges_added += 1 
+        if unions_limit is not None and edges_added == unions_limit:
+          trace = edges[:i+1]
+          return trace 
+        elif self.connected():
+          trace = edges[:i+1]
+          return trace 
+    return edges
+        
+  def connected(self):
+    candidate = self.find(0)
+    return all(self.find(i) == candidate 
+               for i in range(1, len(self.parent_idx)))
+        
+
 def count_neighboring(grid: Sequence[Sequence[str]] | Sequence[str], 
                       row: int, col: int, pred: Callable[[str], bool]) -> int:
   assert 0 <= row < len(grid)
@@ -49,3 +104,7 @@ def count_neighboring(grid: Sequence[Sequence[str]] | Sequence[str],
         counter += 1
 
   return counter
+
+def l2(x: tuple[int, ...], y: tuple[int, ...]):
+  assert len(x) == len(y)
+  return math.sqrt(sum((x[i]-y[i])**2 for i in range(len(x))))
