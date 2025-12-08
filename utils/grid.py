@@ -25,7 +25,7 @@ class CellularAutomaton():
   
   def run(self) -> None:
     while self.step():
-      self.step()
+      pass
 
 def count_neighboring(grid: Sequence[Sequence[str]] | Sequence[str], 
                       row: int, col: int, pred: Callable[[str], bool]) -> int:
