@@ -12,3 +12,4 @@ My only goal is to finish the Advent of Code, i.e. do one problem every day. Wit
 | [Day 4](./day_4/soln.py) | Iterate through all locations/neighbors      | Iteratively remove until fixed point     |
 | [Day 5](./day_5/soln.py) | Linear scan of ranges                        | Merge intervals and add widths           |
 | [Day 6](./day_6/soln.py) | Parse rows and operate column-wise           | Parse column-wise right to left          |
+| [Day 7](./day_7/soln.py) | Simulate splitting in one pass               | Simulate timelines per branch (DP-like)  |
