@@ -41,14 +41,14 @@ def time_single(day: int, part: str, input_lines: list[str]):
     
 def main():
   argparser = argparse.ArgumentParser()
-  argparser.add_argument('mode', choices=['test', 'run', 'time', 'run_default', 'time_default'])
+  argparser.add_argument('mode', choices=['test', 'run', 'time', 'run-default', 'time-default'])
   argparser.add_argument('day', choices=[str(d) for d in range(1, 13)])
   argparser.add_argument('stage', choices=['A', 'B'])
   args = argparser.parse_args()
   
   if args.mode == "run":
     run_single(int(args.day), args.stage, [line[:-1] for line in sys.stdin])
-  if args.mode == "run_default":
+  if args.mode == "run-default":
     with open(f"{this_dir}/day_{args.day}/input-{args.stage.lower()}.txt", "r") as in_file:
       input_lines = [line[:-1] for line in in_file.readlines()]
     run_single(int(args.day), args.stage, input_lines)
@@ -56,20 +56,20 @@ def main():
     test_single(int(args.day), args.stage)
   if args.mode == "time":
     time_single(int(args.day), args.stage, [line[:-1] for line in sys.stdin])
-  if args.mode == "time_default":
+  if args.mode == "time-default":
     with open(f"{this_dir}/day_{args.day}/input-{args.stage.lower()}.txt", "r") as in_file:
       input_lines = [line[:-1] for line in in_file.readlines()]
     time_single(int(args.day), args.stage, input_lines)
 
 def main_day(day: int):
   argparser = argparse.ArgumentParser()
-  argparser.add_argument('mode', choices=['test', 'run', 'time', 'run_default', 'time_default'])
+  argparser.add_argument('mode', choices=['test', 'run', 'time', 'run-default', 'time-default'])
   argparser.add_argument('stage', choices=['A', 'B'])
   args = argparser.parse_args()
   
   if args.mode == "run":
     run_single(day, args.stage, [line[:-1] for line in sys.stdin])
-  if args.mode == "run_default":
+  if args.mode == "run-default":
     with open(f"{this_dir}/day_{day}/input-{args.stage.lower()}.txt", "r") as in_file:
       input_lines = [line[:-1] for line in in_file.readlines()]
     run_single(day, args.stage, input_lines)
@@ -77,7 +77,7 @@ def main_day(day: int):
     test_single(day, args.stage)
   if args.mode == "time":
     time_single(day, args.stage, [line[:-1] for line in sys.stdin])
-  if args.mode == "time_default":
+  if args.mode == "time-default":
     with open(f"{this_dir}/day_{day}/input-{args.stage.lower()}.txt", "r") as in_file:
       input_lines = [line[:-1] for line in in_file.readlines()]
     time_single(day, args.stage, input_lines)
