@@ -25,7 +25,7 @@ def solve_B(input_lines: list[str]) -> int:
     for b in points[i + 1:]:
       area = (abs(a[0]-b[0])+1) * (abs(a[1]-b[1])+1)
       if area > cur_max and valid_rectangle(points, a, b):
-        cur_max = max(cur_max, (abs(a[0]-b[0])+1) * (abs(a[1]-b[1])+1))
+        cur_max = max(cur_max, area)
   return cur_max
 
 def valid_rectangle(points: list[tuple[int, int]], 
