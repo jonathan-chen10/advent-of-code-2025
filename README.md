@@ -14,3 +14,4 @@ My only goal is to finish the Advent of Code, i.e. do one problem every day. Wit
 | [Day 6](./day_6/soln.py) | Parse rows and operate column-wise           | Parse column-wise right to left          |
 | [Day 7](./day_7/soln.py) | Simulate splitting in one pass               | Simulate timelines per branch (DP-like)  |
 | [Day 8](./day_8/soln.py) | Kruskal's union-find implementation          | Return trace when spanning tree complete |
+| [Day 9](./day_9/soln.py) | Calculate area of all n^2 pairs naively      | Check rectangle against edges + ray cast |
