@@ -1,7 +1,9 @@
 .DS_Store
 __pycache__/
 .venv/
+.ipynb_checkpoints/
 
 # Input files excluded per author request
 input*.txt
 output*.txt
+day_09/visualiz*
