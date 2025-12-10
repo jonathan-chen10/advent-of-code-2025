@@ -6,7 +6,7 @@ SCRIPT_DIR="$(pwd)"
 
 for i in {1..12}
 do
-  SOLN_FILE="$SCRIPT_DIR/day_${i}/soln.py"
+  SOLN_FILE="$SCRIPT_DIR/day_$(printf "%02d" $i)/soln.py"
   RUNNER_FILE="$SCRIPT_DIR/runner.py"
   if [ -e "$SOLN_FILE" ]; then
     python $RUNNER_FILE test $i A

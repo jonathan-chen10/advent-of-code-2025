@@ -11,7 +11,7 @@ echo "=================================="
 echo "TEMPLATE   $(wc -l < "$SCRIPT_DIR/template.py" | tr -d '[:space:]')"
 for i in {1..12}
 do
-  SOLN_FILE="$SCRIPT_DIR/day_${i}/soln.py"
+  SOLN_FILE="$SCRIPT_DIR/day_$(printf "%02d" $i)/soln.py"
   RUNNER_FILE="$SCRIPT_DIR/runner.py"
   if [ -e "$SOLN_FILE" ]; then
     time_a=$(python $RUNNER_FILE time-default $i A)

@@ -9,7 +9,7 @@ def solve_fxn(day: int, part: str):
   assert 1 <= day <= 12
   assert part in ['A', 'B']
   import importlib
-  day_module = importlib.import_module(f'day_{day}.soln')
+  day_module = importlib.import_module(f'day_{day:02d}.soln')
   return day_module.solve_A if part == 'A' else day_module.solve_B
 
 def run_single(day: int, part: str, input_lines: list[str]):
@@ -21,11 +21,11 @@ def run_single(day: int, part: str, input_lines: list[str]):
 def test_single(day: int, part: str):
   assert 1 <= day <= 12
   assert part in ['A', 'B']
-  with open(f"{this_dir}/day_{day}/input-{part}-test.txt", "r") as in_file:
+  with open(f"{this_dir}/day_{day:02d}/input-{part}-test.txt", "r") as in_file:
     input_lines = [line[:-1] for line in in_file.readlines()]
   result = solve_fxn(day, part)(input_lines)
 
-  with open(f"{this_dir}/day_{day}/output-{part}-test.txt", "r") as out_file:
+  with open(f"{this_dir}/day_{day:02d}/output-{part}-test.txt", "r") as out_file:
     expected_result = int(out_file.read())
     print("Test passed!" if result == expected_result else "Test failed!")
     print(f"Expected: {expected_result}")
@@ -45,21 +45,23 @@ def main():
   argparser.add_argument('day', choices=[str(d) for d in range(1, 13)])
   argparser.add_argument('stage', choices=['A', 'B'])
   args = argparser.parse_args()
+
+  day = int(args.day)
   
   if args.mode == "run":
-    run_single(int(args.day), args.stage, [line[:-1] for line in sys.stdin])
+    run_single(day, args.stage, [line[:-1] for line in sys.stdin])
   if args.mode == "run-default":
-    with open(f"{this_dir}/day_{args.day}/input-{args.stage.lower()}.txt", "r") as in_file:
+    with open(f"{this_dir}/day_{day:02d}/input-{args.stage.lower()}.txt", "r") as in_file:
       input_lines = [line[:-1] for line in in_file.readlines()]
-    run_single(int(args.day), args.stage, input_lines)
+    run_single(day, args.stage, input_lines)
   if args.mode == "test":
-    test_single(int(args.day), args.stage)
+    test_single(day, args.stage)
   if args.mode == "time":
-    time_single(int(args.day), args.stage, [line[:-1] for line in sys.stdin])
+    time_single(day, args.stage, [line[:-1] for line in sys.stdin])
   if args.mode == "time-default":
-    with open(f"{this_dir}/day_{args.day}/input-{args.stage.lower()}.txt", "r") as in_file:
+    with open(f"{this_dir}/day_{day:02d}/input-{args.stage.lower()}.txt", "r") as in_file:
       input_lines = [line[:-1] for line in in_file.readlines()]
-    time_single(int(args.day), args.stage, input_lines)
+    time_single(day, args.stage, input_lines)
 
 def main_day(day: int):
   argparser = argparse.ArgumentParser()
@@ -70,7 +72,7 @@ def main_day(day: int):
   if args.mode == "run":
     run_single(day, args.stage, [line[:-1] for line in sys.stdin])
   if args.mode == "run-default":
-    with open(f"{this_dir}/day_{day}/input-{args.stage.lower()}.txt", "r") as in_file:
+    with open(f"{this_dir}/day_{day:02d}/input-{args.stage.lower()}.txt", "r") as in_file:
       input_lines = [line[:-1] for line in in_file.readlines()]
     run_single(day, args.stage, input_lines)
   if args.mode == "test":
@@ -78,7 +80,7 @@ def main_day(day: int):
   if args.mode == "time":
     time_single(day, args.stage, [line[:-1] for line in sys.stdin])
   if args.mode == "time-default":
-    with open(f"{this_dir}/day_{day}/input-{args.stage.lower()}.txt", "r") as in_file:
+    with open(f"{this_dir}/day_{day:02d}/input-{args.stage.lower()}.txt", "r") as in_file:
       input_lines = [line[:-1] for line in in_file.readlines()]
     time_single(day, args.stage, input_lines)
 
