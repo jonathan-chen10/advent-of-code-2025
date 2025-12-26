@@ -102,54 +102,125 @@ def solve_B(input_lines: list[str]) -> int:
         # they add
         max_frees: list[int] = []
         for f in frees:
-            m = 0
+            m = max(goal) + 1
             button = buttons[f]
             for light in button:
-                m = max(m, goal[light])
+                m = min(m, goal[light]) + 1
             max_frees.append(m)
 
         # start with brute force
         # Compute objective by choosing values of free variables,
         # checking integrality, and summing all variables
         ans = sum(goal)
-        for repr in range(prod(max_frees)):
-            invalid = False
-            frees_assn: list[int] = []
-            for modulus in max_frees:
-                frees_assn.append(repr % modulus)
-                repr //= modulus
+        prev = None
+        frees_coef = [[el for i, el in enumerate(row) if i in frees] for row in solved.arr]
+        zeros_cutoff = len(solved.arr)
+        for ri, row in enumerate(solved.arr):
+            if all(n == 0 for n in row):
+                zeros_cutoff = ri 
+                break
+        frees_assn: list[int] = [0 for _ in range(len(frees))]
+        nonzero = False
+        prev_tup = tuple(frees_assn[:-1])
+        need_regroup = False
+        bad_idx = None
+        while sum(frees_assn) <= sum(max_frees):
+            #print(frees_assn, nonzero, need_regroup)
+            if tuple(frees_assn[:-1]) != prev_tup:
+                nonzero = False 
+                need_regroup = False
+                prev_tup = tuple(frees_assn[:-1])
+            if sum(frees_assn) > ans or need_regroup:
+                if frees_assn == max_frees:
+                    break
+                regroup_inplace(frees_assn, max_frees)
+                if sum(frees_assn) == 0:
+                    break
+                continue
             fixed_assn: list[int] = []
-            for row in solved.arr:
-                if all(n == 0 for n in row):
+            any_zero = False
+            any_frac = False
+            short_circuit = False
+
+            if bad_idx is not None:
+                fixed_val = (solved.arr[bad_idx][-1] -
+                             sum([assn * frees_coef[bad_idx][free_idx] 
+                                  for free_idx, assn in enumerate(frees_assn)]))
+                if fixed_val < 0 and nonzero:
+                    need_regroup = True 
+                if fixed_val < 0:
+                    short_circuit = True
+                    any_zero = True
+
+            for ri, row in enumerate(solved.arr[:zeros_cutoff]):
+                if short_circuit:
                     break
                 fixed_val = (row[-1] -
-                             sum([assn * row[frees[free_idx]]
+                             sum([assn * frees_coef[ri][free_idx] 
                                   for free_idx, assn in enumerate(frees_assn)]))
-                if fixed_val < 0 or fixed_val.denominator != 1:
-                    invalid = True
+                if fixed_val < 0 and nonzero:
+                    need_regroup = True 
+                if fixed_val < 0:
+                    bad_idx = ri
+                    any_zero = True
                     break
+                if fixed_val.denominator != 1:
+                    any_frac = True
                 fixed_assn.append(int(fixed_val))
-            if invalid:
+            if not any_zero:
+                nonzero = True
+            if any_zero or any_frac:
+                if frees_assn == max_frees:
+                    break
+                next_assn_inplace(frees_assn, max_frees)
                 continue
-
-            '''
-            if sum(frees_assn) + sum(fixed_assn) < ans:
-                fixed_idx = 0
-                frees_idx = 0
-                for i in range(len(buttons)):
-                    if i in frees:
-                        #print(frees_assn[frees_idx], end=' ')
-                        frees_idx += 1
-                    else:
-                        #print(fixed_assn[fixed_idx], end=' ')
-                        fixed_idx += 1
-                #print(sum(frees_assn) + sum(fixed_assn))
-            '''
-            ans = min(ans, sum(frees_assn) + sum(fixed_assn))
+            obj = sum(frees_assn) + sum(fixed_assn)
+            if len(frees_assn) > 0 and frees_assn[-1] == 0:
+                prev = obj
+            if len(frees_assn) > 0 and frees_assn[-1] == 1 and prev is not None and obj > prev: 
+                if frees_assn == max_frees:
+                    break
+                regroup_inplace(frees_assn, max_frees)
+                if sum(frees_assn) == 0:
+                    break
+                continue
+            #if obj < ans:
+            #    print("Updated objective")
+            ans = min(ans, obj)
+            if frees_assn == max_frees:
+                break
+            next_assn_inplace(frees_assn, max_frees)
         total += ans
         #print(ans, total)
     return total
 
+def regroup_inplace(frees_assn: list[int], max_frees: list[int], 
+                    cur_idx: int | None = None) -> None:
+    assert len(frees_assn) == len(max_frees)
+    if cur_idx == None:
+        cur_idx = len(frees_assn) - 1
+    if cur_idx < 0:
+        return
+    if frees_assn[cur_idx] == 0:
+        regroup_inplace(frees_assn, max_frees, cur_idx - 1)
+        return 
+    frees_assn[cur_idx] = 0
+    return next_assn_inplace(frees_assn, max_frees, cur_idx - 1)
+    
+
+def next_assn_inplace(frees_assn: list[int], max_frees: list[int], 
+                      cur_idx: int | None = None) -> None:
+    assert len(frees_assn) == len(max_frees)
+    if cur_idx == None:
+        cur_idx = len(frees_assn) - 1
+    if cur_idx < 0:
+        return
+    if frees_assn[cur_idx] < max_frees[cur_idx]:
+        frees_assn[cur_idx] += 1
+        return 
+    frees_assn[cur_idx] = 0
+    next_assn_inplace(frees_assn, max_frees, cur_idx - 1)
+    return
 
 def solve_B_old(input_lines: list[str]) -> int:
     sum = 0
