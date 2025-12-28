@@ -16,4 +16,4 @@ My only goal is to finish the Advent of Code, i.e. do one problem every day. Wit
 | [Day 8](./day_08/soln.py)  | Kruskal's union-find implementation          | Return trace when spanning tree complete |
 | [Day 9](./day_09/soln.py)  | Calculate area of all n^2 pairs naively      | Check rectangle against edges + ray cast |
 | [Day 10](./day_10/soln.py) | Bitmask DP w/ manual bitmap                  | Gaussian elimination + brute force       |
-| [Day 11](./day_11/soln.py) | Recursive DFS with counter                   |                                          |
+| [Day 11](./day_11/soln.py) | Recursive DFS with counter                   | Memoized DFS, filtering bad traces       |
