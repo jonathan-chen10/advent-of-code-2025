@@ -17,3 +17,4 @@ My only goal is to finish the Advent of Code, i.e. do one problem every day. Wit
 | [Day 9](./day_09/soln.py)  | Calculate area of all n^2 pairs naively      | Check rectangle against edges + ray cast |
 | [Day 10](./day_10/soln.py) | Bitmask DP w/ manual bitmap                  | Gaussian elimination + brute force       |
 | [Day 11](./day_11/soln.py) | Recursive DFS with counter                   | Memoized DFS, filtering bad traces       |
+| [Day 11](./day_11/soln.py) | Compare against easy upper and lower bounds  | Ho ho ho (divine intervention)           |
